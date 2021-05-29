@@ -1,0 +1,25 @@
+body {
+   background-color: rgb(41, 45, 62);
+}
+
+.container {
+   margin-top: 9rem !important;
+}
+
+.card {
+   background-color: rgba(57, 60, 78, 0.281);
+   color: #fafafa;
+   border-color: rgba(47, 50, 65, 0.986);
+   border-radius: 5px !important;
+   box-shadow: 0 8px 18px -8px rgba(19, 20, 24, 0.973);
+}
+
+.card-body a {
+   text-decoration: none;
+   color: #fafafa;
+}
+
+.card-body a:hover {
+   color: #fafaface;
+   width: 5px;
+}

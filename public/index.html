@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google SignIn</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <!-- Gogle SignIn-client-id -->
+    <meta name="google-signin-client_id"
+        content="404270019454-9uucm0lgdi43etrasbq2icmgc92ltd3m.apps.googleusercontent.com">
+
+</head>
+
+<body>
+
+    <div class="container p-5">
+        <div class="row rounded-lg ali">
+
+            <div class="col-md-4 mx-auto">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h3>Google SignIn</h3>
+                    </div>
+                    <img src="./img/deadpool.jpg" alt="Logo Fazt" class="card-img-top mx-auto m-2 rounded-circle w-50">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center mb-2">
+                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                        </div>
+
+                        <a href="#" onclick="signOut();">Sign out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Google SignIn API -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <script>
+
+        // Si la url es localhost usar una de las 2 url
+        var url = (window.location.hostname.includes('localhost')) ? 'http://localhost:4000/api/auth/google' : 'https://restserver-node-jc.herokuapp.com/api/auth/google';
+
+        // Iniciar sesión
+        function onSignIn(googleUser) {
+
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+            // Obtenemos el token de sesión
+            var id_token = googleUser.getAuthResponse().id_token;
+            const data = { id_token };
+
+            // Petición al endpoint de google
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+                .then(resp => resp.json())
+                .then(data => console.log("Nuestro Server", data))
+                .catch(console.log)
+        }
+
+        // Cerrar Sesión
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+
+    </script>
+</body>
+
+</html>
