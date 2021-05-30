@@ -28,6 +28,17 @@ const validarJWT = async () => {
 
    //    Generamos el titulo de la pagina chat
    document.title = usuario.nombre;
+
+   //    validamos socket con JWT
+   await conectarSocket();
+};
+
+const conectarSocket = async () => {
+   const socket = io({
+      extraHeaders: {
+         'x-token': localStorage.getItem('token'),
+      },
+   });
 };
 
 const main = async () => {
@@ -36,4 +47,3 @@ const main = async () => {
 };
 
 main();
-// const socket = io();
