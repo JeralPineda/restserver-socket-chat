@@ -55,6 +55,9 @@ function onSignIn(googleUser) {
       .then((resp) => resp.json())
       .then(({ token }) => {
          localStorage.setItem('token', token);
+
+         //  Si es correcto diseccionamos al chat
+         window.location = 'chat.html';
       })
       .catch(console.log);
 }
