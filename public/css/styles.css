@@ -2,10 +2,6 @@ body {
    background-color: rgb(41, 45, 62);
 }
 
-.container {
-   margin-top: 9rem !important;
-}
-
 .card {
    background-color: rgba(57, 60, 78, 0.281);
    color: #fafafa;
