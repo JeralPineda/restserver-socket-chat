@@ -19,7 +19,15 @@ const validarJWT = async () => {
    });
 
    const { usuario: userDB, token: tokenDB } = await resp.json();
+
+   //    Guardamos el nuevo token
+   localStorage.setItem('token', tokenDB);
+
+   //    Guardamos el usuario obtenido del servidor
    usuario = userDB;
+
+   //    Generamos el titulo de la pagina chat
+   document.title = usuario.nombre;
 };
 
 const main = async () => {
