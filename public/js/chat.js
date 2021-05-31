@@ -59,8 +59,8 @@ const conectarSocket = async () => {
 
    socket.on('usuarios-activos', dibujarUsuarios);
 
-   socket.on('mensaje-privado', () => {
-      //    TODO: Recibir mensaje privado
+   socket.on('mensaje-privado', (payload) => {
+      console.log('Privado: ', payload);
    });
 };
 
@@ -112,9 +112,26 @@ txtMensaje.addEventListener('keyup', ({ keyCode }) => {
    txtMensaje.value = '';
 });
 
+btnSalir.addEventListener('click', () => {
+   localStorage.removeItem('token');
+
+   const auth2 = gapi.auth2.getAuthInstance();
+   auth2.signOut().then(() => {
+      console.log('User signed out.');
+      window.location = 'index.html';
+   });
+});
+
 const main = async () => {
    // validarJWT
    await validarJWT();
 };
 
-main();
+(() => {
+   gapi.load('auth2', () => {
+      gapi.auth2.init();
+      main();
+   });
+})();
+
+// main()
