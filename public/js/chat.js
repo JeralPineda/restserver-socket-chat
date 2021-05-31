@@ -59,8 +59,9 @@ const conectarSocket = async () => {
       //    TODO: Recibir los mensajes
    });
 
-   socket.on('usuarios-activos', () => {
+   socket.on('usuarios-activos', (payload) => {
       //    TODO: usuarios activos
+      console.log(payload);
    });
 
    socket.on('mensaje-privado', () => {
